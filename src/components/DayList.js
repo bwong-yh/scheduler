@@ -4,7 +4,7 @@ import React from "react";
 import DayListItem from "./DayListItem";
 
 export default function DayList(props) {
-  const DayListData = props.days.map(day => {
+  const dayListData = props.days.map(day => {
     const { id, name, spots } = day;
 
     return (
@@ -18,6 +18,6 @@ export default function DayList(props) {
   });
 
   return (
-    <ul>{DayListData}</ul>
+    <ul>{dayListData}</ul>
   );
 };
