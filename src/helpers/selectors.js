@@ -1,14 +1,25 @@
+import InterviewerList from "components/InterviewerList";
+
 export function getAppointmentsForDay(state, day) {
-  const appointments = [];
+  let appointments = [];
 
-  const dayAppointments = state.days.flatMap(dayData => {
-    if (dayData.name === day) return dayData.appointments; // return undefined if name and day don't match
-  }).filter(appointment => appointment !== undefined); // filter out undefined from other day
-
-  dayAppointments.forEach(appointment => {
-    appointments.push(state.appointments[appointment]);
+  // extract appointment ids from days
+  state.days.forEach(dayData => {
+    dayData.name === day && (appointments = [...dayData.appointments]);
   });
 
+  // returns a list of appointment data from days appointment ids
+  return appointments.reduce((appointmentsInfo, curr) => {
+    appointmentsInfo.push(state.appointments[curr]);
 
-  return appointments;
+    return appointmentsInfo;
+  }, []);
+}
+
+export function getInterview(state, interview) {
+  // interview is by default null if no interview is scheduled
+  return interview && {
+    student: interview.student,
+    interviewer: state.interviewers[interview.interviewer]
+  };
 }
